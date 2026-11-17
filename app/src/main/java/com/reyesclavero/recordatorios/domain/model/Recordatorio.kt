@@ -6,7 +6,7 @@ import java.time.LocalDate
 data class Recordatorio(
     val id: Long,
     val titulo: String,                    // obligatorio
-    val categoria: Prioridad,
+    val categoria: Categoria,
     val prioridad: Prioridad,
     val estado: EstadoRecordatorio,
     val descripcion: String? = null,       // opcional
