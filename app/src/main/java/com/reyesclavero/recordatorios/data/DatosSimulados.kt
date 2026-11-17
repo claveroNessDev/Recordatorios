@@ -4,6 +4,7 @@ import com.reyesclavero.recordatorios.domain.model.Categoria
 import com.reyesclavero.recordatorios.domain.model.EstadoRecordatorio
 import com.reyesclavero.recordatorios.domain.model.Prioridad
 import com.reyesclavero.recordatorios.domain.model.Recordatorio
+import com.reyesclavero.recordatorios.domain.validation.esValido
 import java.time.LocalDate
 
 // "object" = un único contenedor para los datos de prueba (no se crean instancias)
@@ -64,9 +65,22 @@ object DatosSimulados {
             categoria = hogar,
             prioridad = Prioridad.Alta,
             estado = EstadoRecordatorio.Completado(LocalDate.of(2026, 11, 10))
+        ),
+        Recordatorio(
+            id = 7,
+            titulo = "Ok",   // inválido a propósito: menos de 3 caracteres
+            categoria = trabajo,
+            prioridad = Prioridad.Baja,
+            estado = EstadoRecordatorio.Pendiente
         )
     )
 
+
     // SET: categorías sin repetir, obtenidas de los recordatorios
     val categorias: Set<Categoria> = recordatorios.map { it.categoria }.toSet()
+
+    // Solo los recordatorios que pasan la validación: estos son los que se muestran
+    val recordatoriosValidos: List<Recordatorio> = recordatorios.filter { esValido(it) }
+
 }
+
