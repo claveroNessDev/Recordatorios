@@ -9,7 +9,7 @@ sealed class ResultadoValidacion {
 }
 
 // Reglas del producto en un solo lugar: si cambian, se modifican aquí
-const val TITULO_MIN = 3
+const val TITULO_MIN = 4
 const val TITULO_MAX = 50
 const val DESCRIPCION_MAX = 200
 
