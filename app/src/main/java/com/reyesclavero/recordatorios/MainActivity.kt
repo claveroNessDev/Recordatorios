@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.reyesclavero.recordatorios.ui.crear.CrearScreen
+import com.reyesclavero.recordatorios.ui.lista.ListaScreen
 import com.reyesclavero.recordatorios.ui.theme.RecordatoriosTheme
 import com.reyesclavero.recordatorios.ui.screens.PantallaRecordatorios
 
@@ -20,12 +22,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RecordatoriosTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    PantallaRecordatorios(
-                        modifier = Modifier.padding(innerPadding)
+                    CrearScreen (
+                        onVolver = {},
+                        onGuardado = {}
                     )
                 }
             }
         }
     }
-}
