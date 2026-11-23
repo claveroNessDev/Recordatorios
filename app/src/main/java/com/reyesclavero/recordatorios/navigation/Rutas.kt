@@ -12,3 +12,6 @@ data object CrearRoute                                   // sin argumentos
 
 @Serializable
 data class DetalleRoute(val recordatorioId: Long)        // lleva SOLO el identificador
+
+@Serializable
+data object AjustesRoute                                 // sin argumentos

@@ -10,6 +10,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,15 +31,16 @@ import com.reyesclavero.recordatorios.ui.theme.RecordatoriosTheme
 fun ListaScreen(
     onCrear: () -> Unit,
     onAbrirDetalle: (Long) -> Unit,
+    onAbrirAjustes: () -> Unit,                                   // ← NUEVO
     viewModel: ListaViewModel = viewModel(factory = ListaViewModel.Factory)
 ) {
-    // Escucha el estado solo mientras la pantalla está visible
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     ListaContenido(
         uiState = uiState,
         onCrear = onCrear,
         onAbrirDetalle = onAbrirDetalle,
+        onAbrirAjustes = onAbrirAjustes,                          // ← NUEVO
         onReintentar = viewModel::cargar
     )
 }
@@ -50,12 +52,19 @@ fun ListaContenido(
     uiState: ListaUiState,
     onCrear: () -> Unit,
     onAbrirDetalle: (Long) -> Unit,
+    onAbrirAjustes: () -> Unit,                                   // ← NUEVO
     onReintentar: () -> Unit
 ) {
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Mis recordatorios") }) },
+        topBar = {
+            TopAppBar(
+                title = { Text("Mis recordatorios") },
+                actions = {                                       // ← NUEVO: acción a la derecha
+                    TextButton(onClick = onAbrirAjustes) { Text("Ajustes") }
+                }
+            )
+        },
         floatingActionButton = {
-            // Con texto visible: accesible sin depender de un ícono
             ExtendedFloatingActionButton(onClick = onCrear) {
                 Text("Nuevo recordatorio")
             }
@@ -63,7 +72,6 @@ fun ListaContenido(
     ) { innerPadding ->
         val modifier = Modifier.padding(innerPadding)
 
-        // when exhaustivo: la pantalla muestra exactamente UN estado
         when (uiState) {
             ListaUiState.Cargando -> EstadoCarga(modifier)
             ListaUiState.Vacio -> EstadoVacio(onCrear = onCrear, modifier = modifier)
@@ -96,6 +104,7 @@ fun ListaContenidoPreview() {
             uiState = ListaUiState.ConDatos(DatosSimulados.recordatoriosValidos),
             onCrear = {},
             onAbrirDetalle = {},
+            onAbrirAjustes = {},                                  // ← NUEVO
             onReintentar = {}
         )
     }
